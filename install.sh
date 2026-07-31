@@ -25,6 +25,7 @@ with open('$HOME/ollama.tar.zst', 'rb') as ifh, open('$HOME/ollama.tar', 'wb') a
 
     export PATH="$HOME/ollama-install/bin:$PATH"
     LINE='export PATH=$HOME/ollama-install/bin:$PATH'
+    touch ~/.bashrc
     grep -qxF "$LINE" ~/.bashrc || echo "$LINE" >> ~/.bashrc
 fi
 
@@ -85,7 +86,9 @@ echo "   ollama pull qwen3.6:35b-a3b"
 echo ""
 echo "To create a 256K context variant:"
 echo "   ollama show qwen3.6:35b-a3b --modelfile > Modelfile"
-echo "   cat Modelfile"
+echo "   grep -v '^PARAMETER num_ctx' Modelfile > Modelfile.tmp && mv Modelfile.tmp Modelfile"
 echo "   echo 'PARAMETER num_ctx 262144' >> Modelfile"
 echo "   ollama create qwen3.6-35b-a3b-256k -f Modelfile"
 echo "==============================================================="
+
+exec bash -i
