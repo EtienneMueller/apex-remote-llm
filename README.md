@@ -38,18 +38,23 @@ curl http://<tailscale-ip>:11434/api/tags
 
 Get your box's Tailscale IP from the script's output, or with `tailscale ip -4` on the cluster machine.
 
-To get it to work inside the OpenCode coding harness add the following to `~/.config/opencode.jsonc`:
+To get it to work inside the OpenCode coding harness add the model to `~/.config/opencode.jsonc`:
 ```zsh
-"apex": {
-  "npm": "@ai-sdk/openai-compatible",
-  "name": "Apex",
-  "options": {
-	"baseURL": "http://100.x.x.x:11434/v1"
-  },
-  "models": {
-	"qwen3.6-35b-a3b-256k": {
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama",
+      "options": {
+  	  "baseURL": "http://<tailscale-ip>:11434/v1"
+      },
+      "models": {
+        "qwen3.6-35b-a3b-256k": {
 	  "name": "Qwen3.6 35B A3B (256K ctx)"
 	}
+      }
+    }
   }
 }
 ```
