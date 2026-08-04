@@ -47,12 +47,12 @@ To get it to work inside the OpenCode coding harness add the model to `~/.config
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama",
       "options": {
-  	  "baseURL": "http://<tailscale-ip>:11434/v1"
+  	    "baseURL": "http://<tailscale-ip>:11434/v1"
       },
       "models": {
         "qwen3.6-35b-a3b-256k": {
-	  "name": "Qwen3.6 35B A3B (256K ctx)"
-	}
+	      "name": "Qwen3.6 35B A3B (256K ctx)"
+	    }
       }
     }
   }
