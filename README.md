@@ -16,15 +16,15 @@ During the run, Tailscale will print a login URL: open it in a browser to authen
 ## Install Models
 You can install any [Ollama model](https://ollama.com/library) (as long as it fits into the 40GB VRAM of Apex' A100 GPUs), e.g.:
 ```bash
-ollama pull qwen3.6:35b-a3b
+ollama pull qwen3.8:27b
 ```
 
 Ollama defaults to small context windows, to create your own version with 256K context run:
 ```bash
-ollama show qwen3.6:35b-a3b --modelfile > Modelfile
+ollama show qwen3.8:27b --modelfile > Modelfile
 grep -v '^PARAMETER num_ctx' Modelfile > Modelfile.tmp && mv Modelfile.tmp Modelfile
 echo 'PARAMETER num_ctx 262144' >> Modelfile
-ollama create qwen3.6-35b-a3b-256k -f Modelfile
+ollama create qwen3.8:27b-256k -f Modelfile
 ```
 
 ## On your local machine
@@ -50,8 +50,8 @@ To get it to work inside the OpenCode coding harness add the model to `~/.config
   	    "baseURL": "http://<tailscale-ip>:11434/v1"
       },
       "models": {
-        "qwen3.6-35b-a3b-256k": {
-	      "name": "Qwen3.6 35B A3B (256K ctx)"
+        "qwen3.8:27b-256k": {
+	      "name": "Qwen3.8 27B (256K ctx)"
 	    }
       }
     }
