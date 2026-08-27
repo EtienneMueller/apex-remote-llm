@@ -8,7 +8,7 @@ One-liner setup for running Ollama on CMKL University's Apex GPU cluster and rea
 ## Usage
 Run directly from GitHub (no download needed):
 ```bash
-curl -fsSL https://raw.githubusercontent.com/EtienneMueller/apex-remote-llm/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/EtienneMueller/apex-remote-llm/main/install.sh | bash && source ~/.bashrc
 ```
 
 During the run, Tailscale will print a login URL: open it in a browser to authenticate the machine.
