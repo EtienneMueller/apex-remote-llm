@@ -10,27 +10,17 @@ echo "==> Installing Ollama ${OLLAMA_VERSION} + Tailscale..."
 
 # --- Ollama --------------------------------------------------------------
 if ! command -v ollama &>/dev/null; then
-    echo "==> Downloading Ollama ${OLLAMA_VERSION}..."
-    
-    mkdir -p ~/ollama-install/bin
-
-    # v0.6.x ships as a single binary + optional lib tarball
-    curl -L -o ~/ollama-install/bin/ollama \
-        "https://github.com/ollama/ollama/releases/download/${OLLAMA_VERSION}/ollama-linux-amd64"
-    chmod +x ~/ollama-install/bin/ollama
+    echo "==> Downloading Ollama ${OLLAMA_VERSION} (this is ~1.6 GB)..."
  
-    # Download bundled CUDA/runtime libs (needed for GPU support)
-    if [ ! -d ~/ollama-install/lib ]; then
-        echo "==> Downloading Ollama libs..."
-        curl -L -o ~/ollama-libs.tgz \
-            "https://github.com/ollama/ollama/releases/download/${OLLAMA_VERSION}/ollama-linux-amd64-libs.tgz" \
-            || echo "WARN: libs tarball not found — GPU may still work if libs are bundled in the binary."
-        if [ -f ~/ollama-libs.tgz ]; then
-            mkdir -p ~/ollama-install/lib/ollama
-            tar -xzf ~/ollama-libs.tgz -C ~/ollama-install/lib/ollama
-            rm ~/ollama-libs.tgz
-        fi
-    fi
+    mkdir -p ~/ollama-install
+ 
+    # v0.6.2 ships as a .tgz containing bin/ and lib/ subdirectories
+    curl -L -o ~/ollama-linux-amd64.tgz \
+        "https://github.com/ollama/ollama/releases/download/${OLLAMA_VERSION}/ollama-linux-amd64.tgz"
+ 
+    echo "==> Extracting..."
+    tar -xzf ~/ollama-linux-amd64.tgz -C ~/ollama-install
+    rm ~/ollama-linux-amd64.tgz
  
     export PATH="$HOME/ollama-install/bin:$PATH"
     LINE='export PATH=$HOME/ollama-install/bin:$PATH'
@@ -44,7 +34,6 @@ if ! command -v ollama &>/dev/null; then
         grep -qxF "$LIBLINE" ~/.bashrc || echo "$LIBLINE" >> ~/.bashrc
     fi
 fi
-
 
 # --- Start the Ollama server ---------------------------------------------
 if ! pgrep -f "ollama serve" > /dev/null; then
